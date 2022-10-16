@@ -8,27 +8,18 @@
  */
 const express = require("express"); // Express web server framework
 const request = require("request");
-// const axios = require("axios"); // "Request" library
-// const bodyParser = require("body-parser");
-// const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
-const fs = require("fs");
-const jwt = require("jsonwebtoken");
-// const https = require("https");
-// const exphbs = require("express-handlebars");
 const cors = require("cors");
-// const { config } = require("./config");
-require("dotenv").config();
 
-const client_id = process.env.clientID; // Your client id
-const client_secret = process.env.clientSecret; // Your secret
-const privateKey = fs.readFileSync("AuthKey_A8FKGGUQP3.p8").toString();
-const teamId = process.env.teamId;
-const keyId = process.env.keyId;
+// specify client_id, client_secret & redirect_uri in .env 
+// load .env add access the constants by process.env.xxx
+require("dotenv").config()
 
-var redirect_uri = process.env.redirect_uri || "http://localhost:3000/callback"; // Your redirect uri
-// var redirect_uri = "http://localhost:3000/callback";
+const client_id = process.env.client_id; // Your client id
+const client_secret = process.env.client_secret; // Your secret
+const redirect_uri = process.env.redirect_uri; // Your redirect uri
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -56,57 +47,21 @@ app
   .use(cors())
   .use(cookieParser());
 
-app.get("/login", function (req, res) {
+app.get('/login', function (req, res) {
+
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = "user-read-private user-read-email user-top-read";
-  res.redirect(
-    "https://accounts.spotify.com/authorize?" +
-      querystring.stringify({
-        response_type: "code",
-        client_id: client_id,
-        scope: scope,
-        redirect_uri: redirect_uri,
-        state: state,
-      })
-  );
-});
-
-app.get("/applemusic", function (req, res) {
-  const token = jwt.sign({}, privateKey, {
-    algorithm: "ES256",
-    expiresIn: "180d",
-    issuer: teamId,
-    header: {
-      alg: "ES256",
-      kid: keyId,
-    },
-  });
-
-  res.redirect(
-    "/#" +
-      querystring.stringify({
-        client: "applemusic",
-        dev_token: token,
-      })
-  );
-  // res.redirect("https://idmsa.apple.com/IDMSWebAuth/auth?" + querystring.stringify({}))
-  // let music = MusicKit.getInstance();
-  // music.authorize().then(console.log("hello"));
-  // res.sendFile(__dirname + "/public/applemusic.html");
-});
-
-app.get("/lastfm", function (req, res) {
-  // res.redirect(
-  //   "/#" +
-  //     querystring.stringify({
-  //       lastfmKey: lastfmKey,
-  //       service: "lastfm"
-  //     })
-  // );
-  res.sendFile(__dirname + "/public/lastfm.html");
+  var scope = 'user-read-private user-read-email user-top-read';
+  res.redirect('https://accounts.spotify.com/authorize?' +
+    querystring.stringify({
+      response_type: 'code',
+      client_id: client_id,
+      scope: scope,
+      redirect_uri: redirect_uri,
+      state: state
+    }));
 });
 
 app.get("/callback", function (req, res) {
@@ -120,9 +75,9 @@ app.get("/callback", function (req, res) {
   if (state === null || state !== storedState) {
     res.redirect(
       "/#" +
-        querystring.stringify({
-          error: "state_mismatch",
-        })
+      querystring.stringify({
+        error: "state_mismatch",
+      })
     );
   } else {
     res.clearCookie(stateKey);
@@ -149,11 +104,11 @@ app.get("/callback", function (req, res) {
 
         res.redirect(
           "/#" +
-            querystring.stringify({
-              client: "spotify",
-              access_token: access_token,
-              refresh_token: refresh_token,
-            })
+          querystring.stringify({
+            client: "spotify",
+            access_token: access_token,
+            refresh_token: refresh_token,
+          })
         );
         // res.redirect("/spotify");
         // console.log(retrieveTracksSpotify(access_token, "short_term", 1, "LAST MONTH"));
