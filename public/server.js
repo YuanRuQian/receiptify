@@ -33,22 +33,40 @@
     style.position = "relative";
     style.top = window.innerHeight + "px";
     style.left = 0;
-    // Append clone to body and return the clone
+
+    const e = document.getElementsByClassName('receiptContainer')[0]
+
+    const actualWidth = e.offsetWidth
+    const actualHeight = e.offsetHeight
+
+    style.width = actualWidth + "px";
+    style.height = actualHeight + "px";
+
+
     document.body.appendChild(clone);
     return clone;
   }
   var userProfileSource = document.getElementById(
-      "user-profile-template"
-    ).innerHTML,
+    "user-profile-template"
+  ).innerHTML,
     userProfileTemplate = Handlebars.compile(userProfileSource),
     userProfilePlaceholder = document.getElementById("receipt");
 
+
+
   function downloadImg(fileName) {
     var offScreen = document.querySelector(".receiptContainer");
+
+
     window.scrollTo(0, 0);
     var clone = hiddenClone(offScreen);
+
+
+    console.log(clone)
     // Use clone with htm2canvas and delete clone
-    html2canvas(clone, { scrollY: -window.scrollY }).then((canvas) => {
+    html2canvas(clone, {
+      scale: 1
+    }).then((canvas) => {
       var dataURL = canvas.toDataURL("image/png", 1.0);
       document.body.removeChild(clone);
       var link = document.createElement("a");
@@ -61,7 +79,39 @@
     });
   }
 
+  function retrieveArtists(timeRangeSlug, domNumber, domPeriod) {
+    $.ajax({
+      url: `https://api.spotify.com/v1/me/top/artists?limit=10&time_range=${timeRangeSlug}`,
+      headers: {
+        Authorization: "Bearer " + access_token,
+      },
+      success: function (response) {
+        let data = {
+          artistList: response.items,
+          date: today.toLocaleDateString("en-US", dateOptions).toUpperCase(),
+          json: true,
+        };
+        for (var i = 0; i < data.artistList.length; i++) {
+          data.artistList[i].id = (i + 1 < 10 ? "0" : "") + (i + 1);
+        }
+
+        userProfilePlaceholder.innerHTML = userProfileTemplate({
+          tracks: data.artistList,
+          time: data.date,
+          num: domNumber,
+          name: displayName,
+          period: domPeriod,
+        });
+
+        document
+          .getElementById("download")
+          .addEventListener("click", () => downloadImg(timeRangeSlug));
+      },
+    });
+  }
+
   function retrieveTracks(timeRangeSlug, domNumber, domPeriod) {
+
     $.ajax({
       url: `https://api.spotify.com/v1/me/top/tracks?limit=10&time_range=${timeRangeSlug}`,
       headers: {
@@ -116,41 +166,6 @@
     });
   }
 
-  function retrieveTracksApple(hist) {
-    let data = {
-      trackList: hist,
-      total: 0,
-      date: today.toLocaleDateString("en-US", dateOptions).toUpperCase(),
-      json: true,
-    };
-    let albumInfoArr = [];
-    for (var i = 0; i < data.trackList.length; i++) {
-      const attributes = data.trackList[i].attributes;
-      const isAlbum = data.trackList[i].type === "albums";
-      console.log(data.trackList[i].type);
-      const albumInfo = {
-        id: (i + 1 < 10 ? "0" : "") + (i + 1),
-        duration_ms: isAlbum ? attributes.trackCount : 1,
-        name: isAlbum
-          ? attributes.name.toUpperCase() + " - " + attributes.artistName
-          : attributes.name.toUpperCase(),
-      };
-      console.log(albumInfo);
-      albumInfoArr.push(albumInfo);
-      data.total += albumInfo.duration_ms;
-    }
-    userProfilePlaceholder.innerHTML = userProfileTemplate({
-      tracks: albumInfoArr,
-      total: data.total,
-      time: data.date,
-      num: 1,
-      name: displayName,
-      period: "HEAVY ROTATION",
-    });
-    document
-      .getElementById("download")
-      .addEventListener("click", () => downloadImg("heavy_rotation"));
-  }
 
   let params = getHashParams();
 
@@ -199,7 +214,7 @@
                 $("#options").hide();
                 $("#login").hide();
                 $("#loggedin").show();
-                retrieveTracksApple(hist);
+                retrieveTracks(hist);
                 console.log(hist);
               });
             } catch (error) {
@@ -221,21 +236,21 @@
     document.getElementById("short_term").addEventListener(
       "click",
       function () {
-        retrieveTracks("short_term", 1, "LAST MONTH");
+        retrieveArtists("short_term", 1, "LAST MONTH");
       },
       false
     );
     document.getElementById("medium_term").addEventListener(
       "click",
       function () {
-        retrieveTracks("medium_term", 2, "LAST 6 MONTHS");
+        retrieveArtists("medium_term", 2, "LAST 6 MONTHS");
       },
       false
     );
     document.getElementById("long_term").addEventListener(
       "click",
       function () {
-        retrieveTracks("long_term", 3, "ALL TIME");
+        retrieveArtists("long_term", 3, "ALL TIME");
       },
       false
     );

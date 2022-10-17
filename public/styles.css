@@ -1,19 +1,19 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 @font-face {
-  font-family: "receipt";
-  src: url("Merchant_Copy.ttf") format("truetype");
+  font-family: 'receipt';
+  src: url('Merchant_Copy.ttf') format('truetype');
 }
 
 h1 {
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 600;
   font-size: 4.5rem;
   text-align: center;
   margin-bottom: 0px;
-  margin-top:0px;
+  margin-top: 0px;
 }
 h2 {
   font-size: 2.5rem;
@@ -26,18 +26,18 @@ p {
   font-family: Helvetica, Geneva, Tahoma, sans-serif;
 }
 .logo {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-weight: 600;
   font-size: 3.3rem;
   text-align: center;
   padding-top: 15px;
 }
 .info {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
   text-align: center;
 }
 .period {
-  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 1.5rem;
   text-align: center;
   padding-bottom: 15px;
@@ -60,7 +60,7 @@ p {
   cursor: pointer;
   border-radius: 10px;
   color: white;
-  font-family: "Helvetica Neue", Helvetica, Geneva, Tahoma, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Geneva, Tahoma, sans-serif;
   width: 100%;
   display: block;
   max-width: 295px;
@@ -84,7 +84,7 @@ p {
   cursor: pointer;
   border-radius: 10px;
   color: white;
-  font-family: "Helvetica Neue", Helvetica, Geneva, Tahoma, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Geneva, Tahoma, sans-serif;
   margin: 0vh 1vh;
   width: auto;
 }
@@ -134,9 +134,8 @@ p {
   margin: 2%;
 }
 .receiptContainer {
-  background-image: url("wrinkled-paper-texture-7.jpg");
+  background-image: url('wrinkled-paper-texture-7.jpg');
   background-position: center;
-  width: 340px;
   filter: brightness(110%);
   padding: 20px;
   text-transform: uppercase;
@@ -150,7 +149,7 @@ p {
 p,
 table,
 .date {
-  font-family: "receipt", "Courier New", Courier, monospace;
+  font-family: 'receipt', 'Courier New', Courier, monospace;
   font-size: 2.1rem;
   line-height: 2rem;
 }
@@ -180,10 +179,11 @@ td {
   width: 225px;
   overflow: auto;
 }
-.length {
-  text-align: right;
-  padding-left: 10px;
-  padding-right: 0px;
+.genres {
+  text-align: center;
+}
+.genres li {
+  text-align: left;
 }
 .website {
   margin-bottom: 0px;
@@ -210,15 +210,15 @@ td {
 
 .seperator hr {
   width: 100%;
-  border-top: 1px solid #E5E5E5;
+  border-top: 1px solid #e5e5e5;
 }
 
 .announcing-text {
-  color: #FD1200;
+  color: #fd1200;
   border-radius: 35px;
   width: 105px;
   height: 28px;
-  background-color: #FAE6E6;
+  background-color: #fae6e6;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
@@ -232,14 +232,14 @@ td {
 }
 
 .middle-container .title {
-  font-family: "Helvetica Neue";
+  font-family: 'Helvetica Neue';
   font-size: 32px;
   font-weight: bold;
   padding: 24px 2px 16px 2px;
 }
 
 .middle-container .subtitle {
-  font-family: "Helvetica Neue";
+  font-family: 'Helvetica Neue';
   font-size: 18px;
   max-width: 400px;
   margin: 0 auto;
@@ -298,7 +298,6 @@ td {
 }
 
 @media (max-width: 900px) {
-
   .header-section {
     width: 100%;
     padding: 0 32px;

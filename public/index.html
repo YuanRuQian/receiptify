@@ -14,16 +14,10 @@
 					<div class="row">
 						<div class="col-12">
 							<h1>Receiptify</h1>
-							<h2>Top Track Generator</h2>
+							<h2>Top Artist Generator</h2>
 						</div>
 						<div class="col-12 col-md-4">
 							<a href="/login" class="login-btn">Log in with Spotify</a>
-						</div>
-						<div class="col-12 col-md-4">
-							<a href="/lastfm" class="login-btn lastfm">Last.fm</a>
-						</div>
-						<div class="col-12 col-md-4">
-							<a href="/applemusic" class="login-btn apple">Log in with Apple Music*</a>
 						</div>
 					</div>
 				</div>
@@ -61,19 +55,19 @@
 				</p>
 				<p class="info">
 					Made by <a href="https://michellexliu.me">Michelle Liu</a>. <br />
-					<a href="https://paypal.me/mchelleliu" target="_blank">PayPal</a> |
-					<a href="https://venmo.com/Michelle-Liuu" target="_blank">Venmo</a>
+					<a rel="noopener" href="https://paypal.me/mchelleliu" target="_blank">PayPal</a> |
+					<a rel="noopener" href="https://venmo.com/Michelle-Liuu" target="_blank">Venmo</a>
 				</p>
 				<p class="info">
 					*If nothing is happening when you try to log in with Apple Music, it may be because pop-ups are blocked on your browser or device. Enable them and try again!<br />
-					<a href="https://support.google.com/chrome/answer/95472?co=GENIE.Platform%3DiOS&hl=en" target="_blank">Allowing pop-ups in Chrome</a> |
-					<a href="https://kb.wisc.edu/helpdesk/page.php?id=40874" target="_blank">Allowing pop-ups in Safari (iOS)</a>
+					<a rel="noopener" href="https://support.google.com/chrome/answer/95472?co=GENIE.Platform%3DiOS&hl=en" target="_blank">Allowing pop-ups in Chrome</a> |
+					<a rel="noopener" href="https://kb.wisc.edu/helpdesk/page.php?id=40874" target="_blank">Allowing pop-ups in Safari (iOS)</a>
 				</p>
 			</div>
 
 			<div id="loggedin">
 				<h1>Receiptify</h1>
-				<h2>Top Track Generator</h2>
+				<h2>Top Artist Generator</h2>
 				<div id="options">
 					<button class="time-btn" id="short_term">Last Month</button>
 					<button class="time-btn" id="medium_term">Last 6 Months</button>
@@ -102,10 +96,10 @@
 							QTY
 						</td>
 						<td>
-							ITEM
+							ARTIST
 						</td>
-						<td class='length'>
-							AMT
+						<td class='genres'>
+							GENRES
 						</td>
 					</thead>
 					{{#each tracks}}
@@ -115,14 +109,13 @@
 							</td>
 							<td class='name'>
 								{{this.name}}
-								{{#each this.artists}}
-									<span>
-										{{this.name}}
-									</span>
-								{{/each}}
 							</td>
-							<td class='length'>
-								{{this.duration_ms}}
+							<td class='genres'>
+								<ul>
+								{{#each this.genres}}
+								<li>{{this}}</li>
+								{{/each}}
+								</ul>
 							</td>
 						</tr>
 					{{/each}}

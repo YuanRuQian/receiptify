@@ -12,7 +12,7 @@
 <body>
   <div class="container">
     <h1>Receiptify</h1>
-    <h2>Top Track Generator</h2>
+    <h2>Top Artist Generator</h2>
     <div id="options">
       <button class="btn time-btn" id="short_term">Last Month</button>
       <button class="btn time-btn" id="medium_term">Last 6 Months</button>
@@ -21,7 +21,7 @@
     <div id="receipt">
       <div class="receiptContainer" id="shortTermReceipt">
         <h2 class="logo">
-          RECEIPTIFY
+          RECEIPTIFY spotify
         </h2>
         <p class="period">
           {{shortTerm.period}}
@@ -38,10 +38,10 @@
               QTY
             </td>
             <td>
-              ITEM
+              ARTIST
             </td>
             <td class="length">
-              AMT
+              GENRES
             </td>
           </thead>
           {{#each shortTerm.tracks}}
@@ -50,15 +50,10 @@
               {{this.id}}
             </td>
             <td class="name">
-              {{this.name}} -
-              {{#each this.artists}}
-              <span>
-                {{this.name}}
-              </span>
-              {{/each}}
+              {{this.name}}
             </td>
-            <td class="length">
-              {{this.duration_ms}}
+            <td class="genres">
+              {{this.genres}}
             </td>
           </tr>
           {{/each}}
